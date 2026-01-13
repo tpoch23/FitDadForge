@@ -249,9 +249,6 @@ export default function App() {
   const [currentQuote, setCurrentQuote] = useState(LARGE_QUOTE_DATABASE[0]);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   
-  // PR Tracker State
-  const [newPR, setNewPR] = useState({ exercise: '', weight: '' });
-
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const estPulseAnim = useRef(new Animated.Value(1)).current;
   const insets = useSafeAreaInsets();
@@ -337,15 +334,6 @@ export default function App() {
     data.currentStreak = calculateStreak(data.history);
     await AsyncStorage.setItem('fitdad_user_data', JSON.stringify(data));
     setUserData(data);
-  };
-
-  const handleAddPR = () => {
-    if (newPR.exercise && newPR.weight) {
-      const updatedPBs = { ...userData.pbWeights, [newPR.exercise]: parseInt(newPR.weight) };
-      saveToStorage({ ...userData, pbWeights: updatedPBs });
-      setNewPR({ exercise: '', weight: '' });
-      Alert.alert("RECORD LOGGED", `${newPR.exercise} updated to ${newPR.weight} LB.`);
-    }
   };
 
   useEffect(() => {
@@ -598,29 +586,6 @@ export default function App() {
               </View>
               <Text style={styles.forgeBtnArrow}>⮕</Text>
             </TouchableOpacity>
-
-            {/* QUICK PR TRACKER */}
-            <Text style={styles.libertyTitle}>LOG A BENCHMARK</Text>
-            <View style={[styles.ironCard, { borderLeftColor: '#fbbf24' }]}>
-               <TextInput 
-                  style={styles.input} 
-                  placeholder="EXERCISE (E.G. BENCH PRESS)" 
-                  placeholderTextColor="#444" 
-                  value={newPR.exercise}
-                  onChangeText={t => setNewPR({...newPR, exercise: t})}
-                />
-                <TextInput 
-                  style={styles.input} 
-                  placeholder="WEIGHT (LB)" 
-                  placeholderTextColor="#444" 
-                  keyboardType="numeric"
-                  value={newPR.weight}
-                  onChangeText={t => setNewPR({...newPR, weight: t})}
-                />
-                <TouchableOpacity style={styles.hammerBtn} onPress={handleAddPR}>
-                  <Text style={styles.hammerBtnText}>LOG RECORD</Text>
-                </TouchableOpacity>
-            </View>
             
             <TouchableOpacity style={styles.homeRestBtn} onPress={() => addRestDay()}>
                 <Text style={styles.homeRestBtnText}>☕ LOG REST DAY</Text>
@@ -641,6 +606,7 @@ export default function App() {
               </TouchableOpacity>
             </View>
             <View style={styles.quoteCard}><Text style={styles.quoteText}>{currentQuote}</Text></View>
+            <Text style={styles.versionDisplay}>FORGE VERSION 1.0.1</Text>
           </ScrollView>
 
           <Modal visible={vaultModal} animationType="slide">
@@ -893,6 +859,7 @@ const styles = StyleSheet.create({
   utilLabel: { color: '#78716c', fontSize: 8, fontWeight: 'bold' },
   quoteCard: { padding: 20, backgroundColor: '#1c1917', borderLeftWidth: 3, borderLeftColor: '#d97706' },
   quoteText: { color: '#a8a29e', fontSize: 13, fontStyle: 'italic' },
+  versionDisplay: { color: '#444', fontSize: 10, fontWeight: 'bold', textAlign: 'center', marginTop: 30, letterSpacing: 2 },
   phaseStrip: { width: '90%', backgroundColor: '#141210', padding: 10, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#292524' },
   phaseStripTitle: { color: '#d97706', fontSize: 10, fontWeight: 'bold', marginBottom: 5, textAlign: 'center' },
   weekSelector: { flexDirection: 'row', justifyContent: 'center' },
