@@ -563,7 +563,7 @@ export default function App() {
         <SafeAreaView style={styles.container}>
           <View style={styles.sealHeader}>
             <View style={styles.logoBadge}>
-               <Image source={require('./assets/logo.png')} style={{width: 35, height: 35}} />
+               <Image source={require('../assets/logo.png')} style={{width: 35, height: 35}} />
             </View>
             <Text style={styles.brandLogo}>FITDADFORGE</Text>
             <View style={styles.taglineWrapper}>
@@ -743,7 +743,7 @@ export default function App() {
                     </View>
                   </View>
                   <Image 
-                    source={require('./assets/logo.png')} 
+                    source={require('../assets/logo.png')} 
                     style={styles.cardSeal}
                     resizeMode="contain"
                   />
