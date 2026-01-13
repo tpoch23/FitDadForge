@@ -4,9 +4,6 @@ import { Alert, Animated, Image, Modal, ScrollView, Share, StatusBar, StyleSheet
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LARGE_QUOTE_DATABASE } from './Quotes';
 
-// --- VERSION TRACKING ---
-const APP_VERSION = "1.04";
-
 let MASTER_ARMORY = [
   // --- LOWER PULL ---
   { name: "Barbell Single Leg RDL", type: "Secondary", cat: "Lower Pull", reps: "8" },
@@ -565,12 +562,16 @@ export default function App() {
         <StatusBar barStyle="light-content" backgroundColor="#1a1816" />
         <SafeAreaView style={styles.container}>
           <View style={styles.sealHeader}>
-            <Image 
-              source={require('../assets/icon.png')} 
-              style={styles.headerWatermark}
-              resizeMode="contain"
-            />
-            <Text style={styles.brandLogo}>⚒ FITDADFORGE ⚒</Text>
+            <View style={styles.logoBadge}>
+               {/* FIX: Corrected path for Expo router project structure */}
+               <Image source={require('../assets/logo.png')} style={{width: 35, height: 35}} />
+            </View>
+            <Text style={styles.brandLogo}>FITDADFORGE</Text>
+            <View style={styles.taglineWrapper}>
+               <View style={styles.tagLine} />
+               <Text style={styles.brandTagline}>REDEFINING THE DAD BOD</Text>
+               <View style={styles.tagLine} />
+            </View>
             <Text style={styles.dadName}>{userData.name?.toUpperCase()}</Text>
             <Animated.Text style={[styles.estLabel, { transform: [{ scale: estPulseAnim }] }]}>DAD EST. {userData.dadSince}</Animated.Text>
             <Text style={styles.rankBadge}>{stats.rank} (LVL {stats.lvl})</Text>
@@ -595,23 +596,20 @@ export default function App() {
             </TouchableOpacity>
 
             <View style={styles.utilityGrid}>
-              <TouchableOpacity style={[styles.utilityBtn, styles.highPopBtn]} onPress={() => setVaultModal(true)}>
-                <Text style={[styles.utilIcon, {color: '#fbbf24'}]}>🗄️</Text>
-                <Text style={[styles.utilLabel, {color: '#fbbf24'}]}>ARCHIVE</Text>
+              <TouchableOpacity style={styles.utilityBtn} onPress={() => setVaultModal(true)}>
+                <Text style={styles.utilIcon}>🗄️</Text>
+                <Text style={styles.utilLabel}>ARCHIVE</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.utilityBtn, styles.highPopBtn]} onPress={() => setLedgerModal(true)}>
-                <Text style={[styles.utilIcon, {color: '#fbbf24'}]}>🛖</Text>
-                <Text style={[styles.utilLabel, {color: '#fbbf24'}]}>BARRACKS</Text>
+              <TouchableOpacity style={styles.utilityBtn} onPress={() => setLedgerModal(true)}>
+                <Text style={styles.utilIcon}>🛖</Text>
+                <Text style={styles.utilLabel}>BARRACKS</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.utilityBtn, styles.highPopBtn]} onPress={() => setArmoryModal(true)}>
-                <Text style={[styles.utilIcon, {color: '#fbbf24'}]}>⚔️</Text>
-                <Text style={[styles.utilLabel, {color: '#fbbf24'}]}>ARMORY</Text>
+              <TouchableOpacity style={styles.utilityBtn} onPress={() => setArmoryModal(true)}>
+                <Text style={styles.utilIcon}>⚔️</Text>
+                <Text style={styles.utilLabel}>ARMORY</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.quoteCard}><Text style={styles.quoteText}>{currentQuote}</Text></View>
-            
-            {/* Version Display in Home UI */}
-            <Text style={[styles.tacticalDesc, {textAlign: 'center', marginTop: 10}]}>DEPLOYMENT VERSION: {APP_VERSION}</Text>
           </ScrollView>
 
           <Modal visible={vaultModal} animationType="slide">
@@ -745,8 +743,9 @@ export default function App() {
                       <Text style={styles.tacticalDesc}>{m.focus}</Text>
                     </View>
                   </View>
+                  {/* FIX: Corrected path for Expo router project structure */}
                   <Image 
-                    source={require('../assets/icon.png')} 
+                    source={require('../assets/logo.png')} 
                     style={styles.cardSeal}
                     resizeMode="contain"
                   />
@@ -833,22 +832,18 @@ export default function App() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#0a0908' },
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  sealHeader: { padding: 30, backgroundColor: '#1a1816', alignItems: 'center', overflow: 'hidden' },
-  headerWatermark: {
-    position: 'absolute',
-    top: -5,
-    right: -10,
-    width: 100,
-    height: 100,
-    opacity: 0.8,
-    transform: [{ rotate: '12deg' }]
-  },
-  brandLogo: { color: '#d97706', fontSize: 10, letterSpacing: 5, fontWeight: '900' },
-  dadName: { color: '#e7e5e4', fontSize: 24, fontWeight: 'bold', marginTop: 10 },
-  estLabel: { color: '#78716c', fontSize: 10, fontWeight: 'bold', letterSpacing: 1, marginTop: 2 },
-  rankBadge: { color: '#d97706', fontSize: 10, fontWeight: 'bold', marginTop: 5 },
-  xpBarContainer: { width: '80%', height: 4, backgroundColor: '#292524', marginTop: 10, borderRadius: 2, overflow: 'hidden' },
-  xpBarFill: { height: '100%', backgroundColor: '#d97706', borderRadius: 2 },
+  sealHeader: { padding: 40, backgroundColor: '#141210', alignItems: 'center', borderBottomWidth: 4, borderBottomColor: '#d97706' },
+  logoBadge: { width: 50, height: 50, backgroundColor: '#292524', borderRadius: 25, justifyContent: 'center', alignItems: 'center', marginBottom: 15, borderWidth: 2, borderColor: '#d97706' },
+  logoIcon: { fontSize: 24 },
+  brandLogo: { color: '#fef3c7', fontSize: 24, fontWeight: '900', letterSpacing: 4 },
+  taglineWrapper: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
+  tagLine: { flex: 1, height: 1, backgroundColor: '#d97706', marginHorizontal: 10 },
+  brandTagline: { color: '#d97706', fontSize: 9, fontWeight: 'bold', letterSpacing: 2 },
+  dadName: { color: '#e7e5e4', fontSize: 16, fontWeight: 'bold', marginTop: 15 },
+  estLabel: { color: '#78716c', fontSize: 9, fontWeight: 'bold', letterSpacing: 1, marginTop: 2 },
+  rankBadge: { color: '#d97706', fontSize: 10, fontWeight: 'bold', marginTop: 8 },
+  xpBarContainer: { width: '80%', height: 6, backgroundColor: '#292524', marginTop: 12, borderRadius: 3, overflow: 'hidden' },
+  xpBarFill: { height: '100%', backgroundColor: '#d97706', borderRadius: 3 },
   streakStrip: { flexDirection: 'row', marginTop: 15, justifyContent: 'space-between', width: '90%' },
   streakText: { color: '#78716c', fontSize: 10, fontWeight: 'bold' },
   forgeActionBtn: { backgroundColor: '#1c1917', marginVertical: 10, padding: 25, borderRadius: 4, flexDirection: 'row', alignItems: 'center', borderWidth: 2, borderColor: '#92400e', shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.5, shadowRadius: 5 },
@@ -859,7 +854,6 @@ const styles = StyleSheet.create({
   homeRestBtnText: { color: '#d97706', fontWeight: 'bold', fontSize: 12 },
   utilityGrid: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
   utilityBtn: { backgroundColor: '#1c1917', width: '31%', padding: 15, alignItems: 'center', borderRadius: 2 },
-  highPopBtn: { backgroundColor: '#262626', borderWidth: 1, borderColor: '#fbbf24' },
   utilIcon: { fontSize: 20, marginBottom: 5 },
   utilLabel: { color: '#78716c', fontSize: 8, fontWeight: 'bold' },
   quoteCard: { padding: 20, backgroundColor: '#1c1917', borderLeftWidth: 3, borderLeftColor: '#d97706' },
