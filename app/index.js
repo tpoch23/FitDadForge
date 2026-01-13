@@ -4,6 +4,9 @@ import { Alert, Animated, Image, Modal, ScrollView, Share, StatusBar, StyleSheet
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LARGE_QUOTE_DATABASE } from './Quotes';
 
+// --- VERSION TRACKING ---
+const APP_VERSION = "1.04";
+
 let MASTER_ARMORY = [
   // --- LOWER PULL ---
   { name: "Barbell Single Leg RDL", type: "Secondary", cat: "Lower Pull", reps: "8" },
@@ -248,7 +251,7 @@ export default function App() {
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [currentQuote, setCurrentQuote] = useState(LARGE_QUOTE_DATABASE[0]);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-  
+
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const estPulseAnim = useRef(new Animated.Value(1)).current;
   const insets = useSafeAreaInsets();
@@ -547,8 +550,8 @@ export default function App() {
         <View style={styles.parchmentModal}>
           <Text style={styles.libertyTitle}>WHAT IS YOUR NAME, DAD?</Text>
           <TextInput style={styles.input} onChangeText={t => setUserData({...userData, name: t})}/>
-          <Text style={styles.libertyTitle}>DATE YOU BECAME A DAD?</Text>
-          <TextInput style={styles.input} placeholder="MM/DD/YYYY" placeholderTextColor="#444" onChangeText={t => setUserData({...userData, dadSince: t})}/>
+          <Text style={styles.libertyTitle}>YEAR YOU BECAME A DAD?</Text>
+          <TextInput style={styles.input} keyboardType="numeric" onChangeText={t => setUserData({...userData, dadSince: t})}/>
           <TouchableOpacity style={styles.hammerBtn} onPress={() => saveToStorage({...userData, history: {}, currentWeek: 1, currentPhase: 1}).then(() => setScreen('home'))}><Text style={styles.hammerBtnText}>FORGE</Text></TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -606,7 +609,9 @@ export default function App() {
               </TouchableOpacity>
             </View>
             <View style={styles.quoteCard}><Text style={styles.quoteText}>{currentQuote}</Text></View>
-            <Text style={styles.versionDisplay}>FORGE VERSION 1.0.1</Text>
+            
+            {/* Version Display in Home UI */}
+            <Text style={[styles.tacticalDesc, {textAlign: 'center', marginTop: 10}]}>DEPLOYMENT VERSION: {APP_VERSION}</Text>
           </ScrollView>
 
           <Modal visible={vaultModal} animationType="slide">
@@ -859,7 +864,6 @@ const styles = StyleSheet.create({
   utilLabel: { color: '#78716c', fontSize: 8, fontWeight: 'bold' },
   quoteCard: { padding: 20, backgroundColor: '#1c1917', borderLeftWidth: 3, borderLeftColor: '#d97706' },
   quoteText: { color: '#a8a29e', fontSize: 13, fontStyle: 'italic' },
-  versionDisplay: { color: '#444', fontSize: 10, fontWeight: 'bold', textAlign: 'center', marginTop: 30, letterSpacing: 2 },
   phaseStrip: { width: '90%', backgroundColor: '#141210', padding: 10, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#292524' },
   phaseStripTitle: { color: '#d97706', fontSize: 10, fontWeight: 'bold', marginBottom: 5, textAlign: 'center' },
   weekSelector: { flexDirection: 'row', justifyContent: 'center' },
