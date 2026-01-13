@@ -15,12 +15,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/logo.png"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#0a0908"
+      }
+    },
+    "web": {
+      "favicon": "./assets/logo.png",
+      "bundler": "metro",
+      "backgroundColor": "#0a0908",
+      "themeColor": "#d97706",
+      "config": {
+        "pwa": {
+          "icon": "./assets/logo.png"
+        }
       }
     }
   }
