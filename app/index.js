@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, Modal, ScrollView, Share, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, Vibration, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-// FIXED PATH FOR STEP 4:
-import { LARGE_QUOTE_DATABASE } from '../Quotes';
+// FIXED PATH: Changed to relative import. Ensure Quotes.js is in the same 'app' folder.
+import { LARGE_QUOTE_DATABASE } from './Quotes';
 
 let MASTER_ARMORY = [
   // --- LOWER PULL ---
