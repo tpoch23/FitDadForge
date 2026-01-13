@@ -2,7 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, Modal, ScrollView, Share, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, Vibration, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { LARGE_QUOTE_DATABASE } from './Quotes';
+// FIXED PATH FOR STEP 4:
+import { LARGE_QUOTE_DATABASE } from '../Quotes';
 
 let MASTER_ARMORY = [
   // --- LOWER PULL ---
@@ -32,7 +33,7 @@ let MASTER_ARMORY = [
   { name: "Reverse Hyper", type: "Accessory", cat: "Lower Pull", reps: "15" },
   { name: "Seated Leg Curl", type: "Accessory", cat: "Lower Pull", reps: "15" },
   { name: "Slider Leg Curls", type: "Accessory", cat: "Lower Pull", reps: "12" },
-  { name: "Nordic Curls", type: "Accessory", cat: "Lower Pull", reps: "8" },
+  { name: "Nordic Curls", type: "Secondary", cat: "Lower Pull", reps: "8" },
 
   // --- LOWER PUSH ---
   { name: "Front Squat", type: "Secondary", cat: "Lower Push", reps: "8" },
@@ -563,7 +564,8 @@ export default function App() {
         <SafeAreaView style={styles.container}>
           <View style={styles.sealHeader}>
             <View style={styles.logoBadge}>
-               <Image source={require('../assets/logo.png')} style={{width: 35, height: 35}} />
+               {/* FIXED PATH FOR STEP 3 */}
+               <Image source={require('../public/assets/logo.png')} style={{width: 35, height: 35}} />
             </View>
             <Text style={styles.brandLogo}>FITDADFORGE</Text>
             <View style={styles.taglineWrapper}>
@@ -742,8 +744,9 @@ export default function App() {
                       <Text style={styles.tacticalDesc}>{m.focus}</Text>
                     </View>
                   </View>
+                  {/* FIXED PATH FOR STEP 3 */}
                   <Image 
-                    source={require('../assets/logo.png')} 
+                    source={require('../public/assets/logo.png')} 
                     style={styles.cardSeal}
                     resizeMode="contain"
                   />
