@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, Modal, ScrollView, Share, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, Vibration, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-// FIXED PATH: Changed to relative import. Ensure Quotes.js is in the same 'app' folder.
+// FIXED PATH: Ensure Quotes.js is in the same 'app' folder.
 import { LARGE_QUOTE_DATABASE } from './Quotes';
 
 let MASTER_ARMORY = [
@@ -564,8 +564,7 @@ export default function App() {
         <SafeAreaView style={styles.container}>
           <View style={styles.sealHeader}>
             <View style={styles.logoBadge}>
-               {/* FIXED PATH FOR STEP 3 */}
-               <Image source={require('../public/assets/logo.png')} style={{width: 35, height: 35}} />
+               <Image source={require('./logo.png')} style={{width: 35, height: 35}} />
             </View>
             <Text style={styles.brandLogo}>FITDADFORGE</Text>
             <View style={styles.taglineWrapper}>
@@ -744,9 +743,8 @@ export default function App() {
                       <Text style={styles.tacticalDesc}>{m.focus}</Text>
                     </View>
                   </View>
-                  {/* FIXED PATH FOR STEP 3 */}
                   <Image 
-                    source={require('../public/assets/logo.png')} 
+                    source={require('./logo.png')} 
                     style={styles.cardSeal}
                     resizeMode="contain"
                   />
