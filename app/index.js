@@ -248,6 +248,9 @@ export default function App() {
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [currentQuote, setCurrentQuote] = useState(LARGE_QUOTE_DATABASE[0]);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  
+  // PR Tracker State
+  const [newPR, setNewPR] = useState({ exercise: '', weight: '' });
 
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const estPulseAnim = useRef(new Animated.Value(1)).current;
@@ -334,6 +337,15 @@ export default function App() {
     data.currentStreak = calculateStreak(data.history);
     await AsyncStorage.setItem('fitdad_user_data', JSON.stringify(data));
     setUserData(data);
+  };
+
+  const handleAddPR = () => {
+    if (newPR.exercise && newPR.weight) {
+      const updatedPBs = { ...userData.pbWeights, [newPR.exercise]: parseInt(newPR.weight) };
+      saveToStorage({ ...userData, pbWeights: updatedPBs });
+      setNewPR({ exercise: '', weight: '' });
+      Alert.alert("RECORD LOGGED", `${newPR.exercise} updated to ${newPR.weight} LB.`);
+    }
   };
 
   useEffect(() => {
@@ -547,8 +559,8 @@ export default function App() {
         <View style={styles.parchmentModal}>
           <Text style={styles.libertyTitle}>WHAT IS YOUR NAME, DAD?</Text>
           <TextInput style={styles.input} onChangeText={t => setUserData({...userData, name: t})}/>
-          <Text style={styles.libertyTitle}>YEAR YOU BECAME A DAD?</Text>
-          <TextInput style={styles.input} keyboardType="numeric" onChangeText={t => setUserData({...userData, dadSince: t})}/>
+          <Text style={styles.libertyTitle}>DATE YOU BECAME A DAD?</Text>
+          <TextInput style={styles.input} placeholder="MM/DD/YYYY" placeholderTextColor="#444" onChangeText={t => setUserData({...userData, dadSince: t})}/>
           <TouchableOpacity style={styles.hammerBtn} onPress={() => saveToStorage({...userData, history: {}, currentWeek: 1, currentPhase: 1}).then(() => setScreen('home'))}><Text style={styles.hammerBtnText}>FORGE</Text></TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -586,6 +598,29 @@ export default function App() {
               </View>
               <Text style={styles.forgeBtnArrow}>⮕</Text>
             </TouchableOpacity>
+
+            {/* QUICK PR TRACKER */}
+            <Text style={styles.libertyTitle}>LOG A BENCHMARK</Text>
+            <View style={[styles.ironCard, { borderLeftColor: '#fbbf24' }]}>
+               <TextInput 
+                  style={styles.input} 
+                  placeholder="EXERCISE (E.G. BENCH PRESS)" 
+                  placeholderTextColor="#444" 
+                  value={newPR.exercise}
+                  onChangeText={t => setNewPR({...newPR, exercise: t})}
+                />
+                <TextInput 
+                  style={styles.input} 
+                  placeholder="WEIGHT (LB)" 
+                  placeholderTextColor="#444" 
+                  keyboardType="numeric"
+                  value={newPR.weight}
+                  onChangeText={t => setNewPR({...newPR, weight: t})}
+                />
+                <TouchableOpacity style={styles.hammerBtn} onPress={handleAddPR}>
+                  <Text style={styles.hammerBtnText}>LOG RECORD</Text>
+                </TouchableOpacity>
+            </View>
             
             <TouchableOpacity style={styles.homeRestBtn} onPress={() => addRestDay()}>
                 <Text style={styles.homeRestBtnText}>☕ LOG REST DAY</Text>
